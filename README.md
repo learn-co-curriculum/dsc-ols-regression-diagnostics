@@ -1,23 +1,26 @@
 
-# Linear Regression Diagnostics in `statsmodels`
+# Regression Diagnostics in Statsmodels
+
+## Introduction
 
 So far, we have looked mainly at R-squared values along with some visualization techniques to confirm if the data and residuals fit the the given set of assumptions. In this lesson, we shall look at some statistical procedures to further understand our model and results it produces.We shall be looking at the results we obtained in the regression analysis outcomes for Advertising dataset in the previous lab. 
 
 *Note: Some of the terms in this lesson highlighting underlying statistical testing concepts may be new to some of us. We shall cover some of these in detail in later sections. Here, we shall focus more on running and interpreting the results of these tests in a regression context.*
 
-### Objectives
+## Objectives
+
 You will be able to:
 * Use Q-Q plots for check for the normality in residual errors
 * Use the Jarque-Bera test for normal distribution of residuals
 * Check for heteroscedasticity using Goldfeld-Quandt test to check whether variance is the same in 2 subsamples
 
-### Introduction
+## Let's get started
 
 > Regression diagnostic is a set of procedures available for regression analysis that seek to assess the validity of a model in any of a number of different ways. This assessment may be an exploration of the model's underlying statistical assumptions, an examination of the structure of the model by considering formulations that have fewer, more or different explanatory variables, or a study of subgroups of observations, looking for those that are either poorly represented by the model (outliers) or that have a relatively large effect on the regression model's predictions.[Wiki](https://en.wikipedia.org/wiki/Regression_diagnostic)
 
 Here we shall revisit some of the methods we have already seen, along with some new tests and how to interpret them . 
 
-### Normality Check (Q-Q plots) 
+## Normality Check (Q-Q plots) 
 We have already seen Q-Q plots as a measure to check for the normality (or any other distribution). These are also referred to as normal density plots when used with a standard normal quantiles. These plots are a good way to inspect the distribution of model errors. We saw this earlier with a toy dataset, let's plot a Q-Q for the residuals in `sales~TV` model. 
 
 
@@ -62,7 +65,7 @@ In terms of Q-Q plots above, we can see that residuals are better normally distr
 
 To make it easier to read QQ-plots, it is nice to start with just considering histograms and/or scatter plots of the residuals as given by `statsmodels`.
 
-### Normality Check (Jarque-Bera Test)
+## Normality Check (Jarque-Bera Test)
 
 The Jarque-Bera (JB) test is a test for normality. This test is usually used for large data sets, because other tests like Q-Q plots are not reliable when n is large.
 
@@ -118,7 +121,7 @@ So this looks quite even worse in terms of JB results and skew, kurtosis in the 
 
 This shows us that JB test could be a much better option for testing normality than Q-Q plots we saw earlier. 
 
-### Checking Hetereoscadasticity (GOLDFELD-QUANDT test)
+## Checking Hetereoscadasticity (GOLDFELD-QUANDT test)
 
 The Goldfeld Quandt (GQ) test is used in regression analysis to check for homoscedasticity in the error terms. GQ test is performed by checking if we can define a point that can be used to **differentiate** the variance of the error term. It is a parametric test and uses the assumption that the data is normally distributed. So its general practice to perform normality tests before GQ test. 
 
