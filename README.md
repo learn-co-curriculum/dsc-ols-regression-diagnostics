@@ -3,9 +3,9 @@
 
 ## Introduction
 
-So far, we have looked mainly at R-squared values along with some visualization techniques to confirm if the data and residuals fit the the given set of assumptions. In this lesson, we shall look at some statistical procedures to further understand our model and results it produces.We shall be looking at the results we obtained in the regression analysis outcomes for Advertising dataset in the previous lab. 
+So far, we have looked mainly at R-squared values along with some visualization techniques to confirm if the data and residuals fit the the given set of assumptions. In this lesson, we will look at some statistical procedures to further understand our model and results it produces. We will be looking at the results we obtained in the regression analysis outcomes for Advertising dataset in the previous lab. 
 
-*Note: Some of the terms in this lesson highlighting underlying statistical testing concepts may be new to some of us. We shall cover some of these in detail in later sections. Here, we shall focus more on running and interpreting the results of these tests in a regression context.*
+*Note: Some of the terms in this lesson highlighting underlying statistical testing concepts may be new to some of us. We will cover some of these in detail in later sections. Here, we will focus more on running and interpreting the results of these tests in a regression context.*
 
 ## Objectives
 
@@ -18,7 +18,7 @@ You will be able to:
 
 > Regression diagnostic is a set of procedures available for regression analysis that seek to assess the validity of a model in any of a number of different ways. This assessment may be an exploration of the model's underlying statistical assumptions, an examination of the structure of the model by considering formulations that have fewer, more or different explanatory variables, or a study of subgroups of observations, looking for those that are either poorly represented by the model (outliers) or that have a relatively large effect on the regression model's predictions.[Wiki](https://en.wikipedia.org/wiki/Regression_diagnostic)
 
-Here we shall revisit some of the methods we have already seen, along with some new tests and how to interpret them . 
+Here we will revisit some of the methods we have already seen, along with some new tests and how to interpret them . 
 
 ## Normality Check (Q-Q plots) 
 We have already seen Q-Q plots as a measure to check for the normality (or any other distribution). These are also referred to as normal density plots when used with a standard normal quantiles. These plots are a good way to inspect the distribution of model errors. We saw this earlier with a toy dataset, let's plot a Q-Q for the residuals in `sales~TV` model. 
@@ -60,7 +60,7 @@ fig.show()
 
 Normal Q-Q Plots are a direct visual assessment of how well our residuals match what we would expect from a normal distribution. 
 
-In terms of Q-Q plots above, we can see that residuals are better normally distributed in the case of TV than that of radio. We can also spot an outlier in the left tail of radio residuals, dealing with this might help inprove the fitness of the model. Outliers, skew, heavy and light-tailed aspects of distributions (all violations of normality) can be assessed from Q-Q plots. This migt need a bit of practice before you can truly start to intertrep them. Following image shows you how to relate a histogram to Q-Q plots. 
+In terms of Q-Q plots above, we can see that residuals are better normally distributed in the case of TV than that of radio. We can also spot an outlier in the left tail of radio residuals, dealing with this might help improve the fitness of the model. Outliers, skew, heavy and light-tailed aspects of distributions (all violations of normality) can be assessed from Q-Q plots. This might need a bit of practice before you can truly start to interpret them. Following image shows you how to relate a histogram to Q-Q plots. 
 ![](qq1.jpg)
 
 To make it easier to read QQ-plots, it is nice to start with just considering histograms and/or scatter plots of the residuals as given by `statsmodels`.
@@ -177,7 +177,7 @@ list(zip(name, test))
 
 
 
-The null hypothesis for the GQ test is homoskedasticity. The larger the F-statistic, the more evidence you’ll have against the homoskedasticity assumption and the more likely you have heteroskedasticity (different variance for the two groups). The given P-value above tells us how far we are from the alpha level of 0.05. So the heteroscedasticity which we observed visually can also be confirmed using this test. In such cases, it is also possible to use a different alpha values to suit the needs of experimenter. 
+The null hypothesis for the GQ test is homoskedasticity. The larger the F-statistic, the more evidence we will have against the homoskedasticity assumption and the more likely we have heteroskedasticity (different variance for the two groups). The given P-value above tells us how far we are from the alpha level of 0.05. So the heteroscedasticity which we observed visually can also be confirmed using this test. In such cases, it is also possible to use a different alpha values to suit the needs of experimenter. 
 
 ## Summary 
 In this lesson we looked at a few methods o check for regression assumptions in addition to the visual methods we saw earlier. An understanding and hands-on experience with visual as well as statistical techniques to check your regression analysis will provide you with a good set of tools to run more detailed regression experiments later. 
