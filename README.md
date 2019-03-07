@@ -55,18 +55,6 @@ fig = sm.graphics.qqplot(resid2, dist=stats.norm, line='45', fit=True)
 fig.show()
 ```
 
-    /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:418: UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
-      "matplotlib is currently using a non-GUI backend, "
-
-
-
-![png](index_files/index_2_1.png)
-
-
-
-![png](index_files/index_2_2.png)
-
-
 Normal Q-Q Plots are a direct visual assessment of how well our residuals match what we would expect from a normal distribution. 
 
 In the Q-Q plots above, you can see that residuals are better normally distributed for TV than for radio. 
@@ -98,16 +86,6 @@ test = sms.jarque_bera(model.resid)
 list(zip(name, test))
 ```
 
-
-
-
-    [('Jarque-Bera', 0.6688077048615624),
-     ('Prob', 0.7157646605518613),
-     ('Skew', -0.08863202396577184),
-     ('Kurtosis', 2.7790149735970537)]
-
-
-
 We have a JB value = 0.67, which is pretty low (and in favor of normality), and the p-value of 0.71 is quite high to reject the null hypothesis for normality. Additionally, the kurtosis is below 3, where a kurtosis higher than 3 indicates heavier tails than a normal distribution. The skewness values however show that underlying data is moderately skewed. Let's see what happens if we look at the `radio` residuals.
 
 
@@ -117,16 +95,6 @@ name = ['Jarque-Bera','Prob','Skew', 'Kurtosis']
 test2 = sms.jarque_bera(model2.resid)
 list(zip(name, test2))
 ```
-
-
-
-
-    [('Jarque-Bera', 21.909695462802663),
-     ('Prob', 1.7473104737076075e-05),
-     ('Skew', -0.7636952540480032),
-     ('Kurtosis', 3.5442808937621666)]
-
-
 
 Where The TV residuals showed to be close to normality, the JB results for radio are considerably worse. More-over, a JB p-value much smaller than 0.05 indicates that the normality assumption should definitely be rejected.
 
@@ -167,13 +135,6 @@ list(zip(name, test))
 ```
 
 
-
-
-    [('F statistic', 1.2071212974713172), ('p-value', 0.17652851936962768)]
-
-
-
-
 ```python
 # Run Goldfeld Quandt test
 import statsmodels.stats.api as sms
@@ -181,13 +142,6 @@ name = ['F statistic', 'p-value']
 test = sms.het_goldfeldquandt(model2.resid, model2.model.exog)
 list(zip(name, test))
 ```
-
-
-
-
-    [('F statistic', 1.1409213847001909), ('p-value', 0.257633526627657)]
-
-
 
 The null hypothesis for the GQ test is homoskedasticity. The larger the F-statistic, the more evidence we will have against the homoskedasticity assumption and the more likely we have heteroskedasticity (different variance for the two groups). 
 
