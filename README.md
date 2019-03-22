@@ -10,9 +10,9 @@ So far, you have looked mainly at R-Squared values along with some visualization
 ## Objectives
 
 You will be able to:
-* Use Q-Q plots for check for the normality in residual errors
+* Use Q-Q plots to check for the normality in residual errors
 * Use the Jarque-Bera test for normal distribution of residuals
-* Check for heteroscedasticity using the Goldfeld-Quandt test to check whether variance is the same in 2 samples
+* Check for heteroscedasticity using the Goldfeld-Quandt test to check whether the variance is the same in 2 samples
 
 ## Let's get started
 
@@ -30,7 +30,7 @@ Here we'll revisit some of the methods you've already seen, along with some new 
 ## Normality Check (Q-Q plots) 
 You've already seen Q-Q Plots as a measure to check for normality (or, by extension, any other distribution). 
 
-Q-Q plots are also referred to as normal density plots when used with a standard normal quantiles. These plots are a good way to inspect the distribution of model errors. You saw this earlier with the small height-weight data set. Now, let's plot a Q-Q for the residuals in the `sales ~ TV` and the `sales ~ radio` models. 
+Q-Q plots are also referred to as normal density plots when used with standard normal quantiles. These plots are a good way to inspect the distribution of model errors. You saw this earlier with the small height-weight data set. Let's quickly plot a Q-Q for the residuals in the `sales ~ TV` and the `sales ~ radio` models again!
 
 
 ```python
@@ -54,6 +54,18 @@ fig = sm.graphics.qqplot(resid1, dist=stats.norm, line='45', fit=True)
 fig = sm.graphics.qqplot(resid2, dist=stats.norm, line='45', fit=True)
 fig.show()
 ```
+
+    /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:418: UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
+      "matplotlib is currently using a non-GUI backend, "
+
+
+
+![png](index_files/index_2_1.png)
+
+
+
+![png](index_files/index_2_2.png)
+
 
 Normal Q-Q Plots are a direct visual assessment of how well our residuals match what we would expect from a normal distribution. 
 
@@ -100,18 +112,18 @@ Where The TV residuals showed to be close to normality, the JB results for radio
 
 These results show that even when in the Q-Q plots the results seemed moderately different, the JB test could shed new light on the normality assumption.
 
-## Checking Hetereoscadasticity (Goldfeld-Quandt test)
+## Checking Heteroscadasticity (Goldfeld-Quandt test)
 
 The Goldfeld Quandt (GQ) test is used in regression analysis to check for homoscedasticity in the error terms. The GQ test checks if you can define a point that can be used to **differentiate** the variance of the error term. It is a parametric test and uses the assumption that the data is normally distributed. So it is general practice to check for normality before going over to the GQ test!
 
 Here is an in-depth visual explanation on how this test is performed.
 
 
-In the image below, you can see how observations are split into two groups. Next, a test statistic is run through taking the the ratio of mean square residual errors for the regressions on the two subsets. Evidence of heteroskedasticity is based on performing a hypothesis test (more on this later) as shown in the image.
+In the image below, you can see how observations are split into two groups. Next, a test statistic is run through taking the ratio of mean square residual errors for the regressions on the two subsets. Evidence of heteroskedasticity is based on performing a hypothesis test (more on this later) as shown in the image.
 
 <img src="images/gq1.png" width=500>
 
-Here is a brief description of involved steps:
+Here is a brief description of the steps involved:
 
 * Order the data in ascending order 
 * Split your data into _three_ parts and drop values in the middle part.
@@ -145,7 +157,7 @@ list(zip(name, test))
 
 The null hypothesis for the GQ test is homoskedasticity. The larger the F-statistic, the more evidence we will have against the homoskedasticity assumption and the more likely we have heteroskedasticity (different variance for the two groups). 
 
-The p-value for our tests above tells us whether or not to reject the null-hypothesis of homoscedasticity. Taking a confidence level of alpha = 0.05, we cannot reject the null-hypothesis because for both TV and radio, p-values are larger than 0.05. So even though we visually inspected some heteroscedasticity previously, this cannot be confirmed by the GQ test.
+The p-value for our tests above tells us whether or not to reject the null-hypothesis of homoscedasticity. Taking a confidence level of alpha = 0.05, we cannot reject the null hypothesis because for both TV and radio, p-values are larger than 0.05. So even though we visually inspected some heteroscedasticity previously, this cannot be confirmed by the GQ test.
 
 ## Summary 
 In this lesson, you learned a few methods to check for regression assumptions in addition to the visual methods learned earlier. An understanding and hands-on experience with visual as well as statistical techniques to check your regression analysis will provide you with a good set of tools to run more detailed regression experiments later. 
