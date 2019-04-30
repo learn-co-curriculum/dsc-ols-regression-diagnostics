@@ -55,16 +55,8 @@ fig = sm.graphics.qqplot(resid2, dist=stats.norm, line='45', fit=True)
 fig.show()
 ```
 
-    /Users/lore.dirick/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:418: UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
+    /Users/matthew.mitchell/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:459: UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
       "matplotlib is currently using a non-GUI backend, "
-
-
-
-![png](index_files/index_2_1.png)
-
-
-
-![png](index_files/index_2_2.png)
 
 
 Normal Q-Q Plots are a direct visual assessment of how well our residuals match what we would expect from a normal distribution. 
@@ -75,7 +67,7 @@ You can also spot an outlier in the left tail of radio residuals. Dealing with t
 
 The images below show you how to relate a histogram to their respective Q-Q Plots.
 
-![](images/qq1.jpg)
+![](images/inhouse_qq_density.png)
 
 ## Normality Check (Jarque-Bera Test)
 
@@ -98,6 +90,16 @@ test = sms.jarque_bera(model.resid)
 list(zip(name, test))
 ```
 
+
+
+
+    [('Jarque-Bera', 0.6688077048615619),
+     ('Prob', 0.7157646605518615),
+     ('Skew', -0.08863202396577206),
+     ('Kurtosis', 2.779014973597054)]
+
+
+
 We have a JB value = 0.67, which is pretty low (and in favor of normality), and the p-value of 0.71 is quite high to reject the null hypothesis for normality. Additionally, the kurtosis is below 3, where a kurtosis higher than 3 indicates heavier tails than a normal distribution. The skewness values however show that underlying data is moderately skewed. Let's see what happens if we look at the `radio` residuals.
 
 
@@ -108,6 +110,16 @@ test2 = sms.jarque_bera(model2.resid)
 list(zip(name, test2))
 ```
 
+
+
+
+    [('Jarque-Bera', 21.90969546280269),
+     ('Prob', 1.74731047370758e-05),
+     ('Skew', -0.7636952540480038),
+     ('Kurtosis', 3.5442808937621666)]
+
+
+
 Where The TV residuals showed to be close to normality, the JB results for radio are considerably worse. More-over, a JB p-value much smaller than 0.05 indicates that the normality assumption should definitely be rejected.
 
 These results show that even when in the Q-Q plots the results seemed moderately different, the JB test could shed new light on the normality assumption.
@@ -116,12 +128,28 @@ These results show that even when in the Q-Q plots the results seemed moderately
 
 The Goldfeld Quandt (GQ) test is used in regression analysis to check for homoscedasticity in the error terms. The GQ test checks if you can define a point that can be used to **differentiate** the variance of the error term. It is a parametric test and uses the assumption that the data is normally distributed. So it is general practice to check for normality before going over to the GQ test!
 
-Here is an in-depth visual explanation on how this test is performed.
-
 
 In the image below, you can see how observations are split into two groups. Next, a test statistic is run through taking the ratio of mean square residual errors for the regressions on the two subsets. Evidence of heteroskedasticity is based on performing a hypothesis test (more on this later) as shown in the image.
 
-<img src="images/gq1.png" width=500>
+
+```python
+lwr_thresh = data.TV.quantile(q=.45)
+upr_thresh = data.TV.quantile(q=.55)
+middle_10percent_indices = data[(data.TV >= lwr_thresh) & (data.TV<=upr_thresh)].index
+# len(middle_10percent_indices)
+
+indices = [x-1 for x in data.index if x not in middle_10percent_indices]
+plt.scatter(data.TV.iloc[indices], model.resid.iloc[indices])
+plt.xlabel('TV')
+plt.ylabel('Model Residuals')
+plt.title("Residuals versus TV Feature")
+plt.vlines(lwr_thresh, ymax=8, ymin=-8, linestyles='dashed',linewidth=2)
+plt.vlines(upr_thresh, ymax=8, ymin=-8, linestyles='dashed',linewidth=2);
+```
+
+
+![png](index_files/index_11_0.png)
+
 
 Here is a brief description of the steps involved:
 
@@ -142,18 +170,32 @@ Here is how you can run this test in statsmodels.
 ```python
 # Run Goldfeld Quandt test
 name = ['F statistic', 'p-value']
-test = sms.het_goldfeldquandt(model.resid, model.model.exog)
+test = sms.het_goldfeldquandt(model.resid.iloc[indices], model.model.exog[indices])
 list(zip(name, test))
 ```
+
+
+
+
+    [('F statistic', 1.1993147096678916), ('p-value', 0.19780602597731686)]
+
+
 
 
 ```python
 # Run Goldfeld Quandt test
 import statsmodels.stats.api as sms
 name = ['F statistic', 'p-value']
-test = sms.het_goldfeldquandt(model2.resid, model2.model.exog)
+test = sms.het_goldfeldquandt(model2.resid.iloc[indices], model2.model.exog[indices])
 list(zip(name, test))
 ```
+
+
+
+
+    [('F statistic', 1.2189878283402957), ('p-value', 0.1773756718718901)]
+
+
 
 The null hypothesis for the GQ test is homoskedasticity. The larger the F-statistic, the more evidence we will have against the homoskedasticity assumption and the more likely we have heteroskedasticity (different variance for the two groups). 
 
