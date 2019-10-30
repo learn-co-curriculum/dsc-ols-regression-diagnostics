@@ -3,16 +3,14 @@
 
 ## Introduction
 
-So far, you have looked mainly at R-Squared values along with some visualization techniques to confirm if the data and residuals fit the regression assumptions. Now, you'll look at some statistical procedures to further understand your model and results. You'll be looking at the results obtained in the regression analysis outcomes for the advertising dataset in the previous lab. 
+So far, you have looked mainly at R-Squared values along with some visualization techniques to confirm that regression assumptions are met. Now, you'll look at some statistical procedures to further understand your model and results. You'll be looking at the results obtained in the regression analysis outcomes for the advertising dataset in the previous lab. 
 
 *Note: Some of the terms in this lesson highlighting underlying statistical testing concepts will be new to you. These terms will be covered in detail in later sections. Here, the focus will be on running and interpreting the results of these tests in a regression context.*
 
 ## Objectives
 
 You will be able to:
-* Use Q-Q plots to check for the normality in residual errors
-* Use the Jarque-Bera test for normal distribution of residuals
-* Check for heteroscedasticity using the Goldfeld-Quandt test to check whether the variance is the same in 2 samples
+* Determine if a particular set of data exhibits the assumptions of linear regression
 
 ## Let's get started
 
@@ -30,17 +28,18 @@ Here we'll revisit some of the methods you've already seen, along with some new 
 ## Normality Check (Q-Q plots) 
 You've already seen Q-Q Plots as a measure to check for normality (or, by extension, any other distribution). 
 
-Q-Q plots are also referred to as normal density plots when used with standard normal quantiles. These plots are a good way to inspect the distribution of model errors. You saw this earlier with the small height-weight data set. Let's quickly plot a Q-Q for the residuals in the `sales ~ TV` and the `sales ~ radio` models again!
+Q-Q plots are also referred to as normal density plots when used with standard normal quantiles. These plots are a good way to inspect the distribution of model errors. You saw this earlier with the small height-weight data set. Let's quickly generate a Q-Q plot for the residuals in the `sales ~ TV` and the `sales ~ radio` models again!
 
 
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
+%matplotlib inline
 import statsmodels.api as sm
 import statsmodels.stats.api as sms
 import statsmodels.formula.api as smf
 import scipy.stats as stats
-plt.style.use('fivethirtyeight')
+plt.style.use('ggplot')
 
 data = pd.read_csv('advertising.csv', index_col=0)
 f = 'sales~TV'
@@ -52,11 +51,14 @@ resid1 = model.resid
 resid2 = model2.resid
 fig = sm.graphics.qqplot(resid1, dist=stats.norm, line='45', fit=True)
 fig = sm.graphics.qqplot(resid2, dist=stats.norm, line='45', fit=True)
-fig.show()
 ```
 
-    /Users/matthew.mitchell/anaconda3/lib/python3.6/site-packages/matplotlib/figure.py:459: UserWarning: matplotlib is currently using a non-GUI backend, so cannot show the figure
-      "matplotlib is currently using a non-GUI backend, "
+
+![png](index_files/index_2_0.png)
+
+
+
+![png](index_files/index_2_1.png)
 
 
 Normal Q-Q Plots are a direct visual assessment of how well our residuals match what we would expect from a normal distribution. 
